@@ -1,47 +1,83 @@
-# React Portfolio - Modern Web Application
+# React Portfolio
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)]()
-[![React](https://img.shields.io/badge/React-18.2-61DAFB)]()
-[![GraphQL](https://img.shields.io/badge/GraphQL-Apollo-E10098)]()
-[![Vite](https://img.shields.io/badge/Vite-5.1-646CFF)]()
+Personal portfolio site built with React, TypeScript, and GraphQL. I wanted to experiment with some technologies I've been learning, particularly around GraphQL and modern build tools.
 
-A modern, performant portfolio application showcasing React best practices, TypeScript integration, and GraphQL data fetching with Mock Service Workers.
+## What I Built
 
-## ✨ **Key Features**
+This is a simple portfolio app where I'm showcasing some of my projects. The main things I focused on:
 
-- ⚡ **Lightning Fast** - Built with Vite for optimal performance & HMR
-- 🎨 **Modern UI** - Clean, responsive design with smooth interactions
-- 🔍 **Search Functionality** - Real-time project filtering
-- ♿ **Accessible** - WCAG 2.1 compliant with proper ARIA labels
-- 🎭 **Mock API** - MSW (Mock Service Worker) for realistic development
-- 📱 **Responsive** - Mobile-first design approach
-- 🔒 **Type Safe** - TypeScript for better developer experience
-- 🧪 **Testable** - Structured for easy unit and integration testing
+- Using GraphQL with Apollo Client instead of REST - wanted to see how it compares
+- Added TypeScript gradually (some files still in JSX, working on converting them)
+- Vite instead of Create React App - the build speed difference is pretty noticeable
+- Mock Service Worker for API mocking - actually really useful for development
+- Search/filter functionality for the projects list
+- Keeping it accessible (keyboard navigation, ARIA labels, etc.)
 
-## 🛠️ **Tech Stack**
+## Tech Stack
 
-- **React 18.2** - UI library with hooks and concurrent features  
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Next-generation frontend tooling
-- **React Router v6** - Client-side routing
-- **Apollo Client** - GraphQL client for data fetching
-- **GraphQL** - Query language for APIs
-- **MSW** - Mock Service Worker for API mocking
+**Frontend:**
+- React 18 with hooks
+- TypeScript (migrating from JavaScript)
+- React Router for navigation
+- CSS modules for styling
 
-## 🚦 **Getting Started**
+**Data Layer:**
+- Apollo Client for GraphQL
+- Mock Service Worker (MSW) for dev environment
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+**Build:**
+- Vite - way faster than webpack
+- ESLint for code quality
 
-### Installation & Run Locally
+## Running Locally
+
+## Running Locally
 
 ```bash
-cd react-portfolio
 npm install
 npm run dev
 ```
 
-Notes
-- The GraphQL endpoint is mocked via MSW during development.
-- Open http://localhost:5173 and inspect the mocked GraphQL responses.
+The app should open at `http://localhost:5173`. 
+
+Note: The GraphQL queries are mocked using MSW, so there's no backend server needed. You can see the mock responses in `src/mocks/handlers.js`.
+
+## Project Structure
+
+```
+src/
+├── apollo/          # Apollo Client setup
+├── mocks/           # MSW mock handlers
+├── pages/           # Page components
+│   ├── Home.tsx     # Main page (TypeScript)
+│   └── Home.jsx     # Old version (will remove)
+├── App.jsx          # Root component
+└── main.jsx         # Entry point
+```
+
+## Why These Choices?
+
+**GraphQL over REST:** I wanted to learn GraphQL properly. The nice thing is you only fetch what you need - no over-fetching. Apollo Client's caching is also pretty solid.
+
+**Vite:** Tried it after hearing about the speed improvements. The HMR is instant compared to webpack, and the build times are way faster.
+
+**MSW:** Found this while looking for better mocking solutions. It intercepts requests at the network level, so the code works the same whether you're using mocks or a real API. Makes testing easier too.
+
+**TypeScript:** Adding it incrementally. Started with the new components (Home.tsx) and will gradually convert the rest. Helps catch bugs early.
+
+## What's Next
+
+See [IMPROVEMENT_PLAN.md](./IMPROVEMENT_PLAN.md) for planned features. Main things on my list:
+- Finish TypeScript migration
+- Add proper testing (Jest + React Testing Library)
+- Connect to a real GraphQL backend
+- Better error handling
+- CI/CD pipeline
+
+## Scripts
+
+- `npm run dev` - Start dev server
+- `npm run build` - Production build
+- `npm run preview` - Preview production build
+
+Built with React, GraphQL, and TypeScript.
