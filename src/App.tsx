@@ -2,11 +2,11 @@ import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 
-export default function App() {
+export default function App(): JSX.Element {
   return (
     <div className="app">
       <header className="header">
-        <h1>React Portfolio</h1>
+        <h1>EventFinder</h1>
         <nav>
           <Link to="/">Home</Link>
         </nav>
