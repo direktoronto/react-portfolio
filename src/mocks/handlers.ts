@@ -1,9 +1,9 @@
-import { graphql, HttpResponse } from 'msw'
+import { graphql } from 'msw'
 
 export const handlers = [
-  graphql.query('GetProjects', () => {
-    return HttpResponse.json({
-      data: {
+  graphql.query('GetProjects', (req, res, ctx) => {
+    return res(
+      ctx.data({
         projects: [
           {
             id: '1',
@@ -72,7 +72,7 @@ export const handlers = [
             status: 'On Sale'
           }
         ]
-      }
-    })
+      })
+    )
   })
 ]
