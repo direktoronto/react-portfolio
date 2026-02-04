@@ -1,7 +1,7 @@
 import { graphql } from 'msw'
 
 export const handlers = [
-  graphql.query('GetProjects', (req, res, ctx) => {
+  graphql.query('GetProjects', (_req, res, ctx) => {
     return res(
       ctx.data({
         projects: [

@@ -1,8 +1,7 @@
-import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <div className="app">
       <header className="header">
