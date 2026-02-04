@@ -1,243 +1,107 @@
-# EventFinder - Event Discovery Platform
+# EventFinder 🎫
 
-A modern event discovery platform built with React, TypeScript, and GraphQL. This project demonstrates proficiency in building production-ready applications with comprehensive testing, type safety, and CI/CD workflows.
+A React event discovery app I built to learn GraphQL, TypeScript, and modern testing practices. Think of it as a mini-Ticketmaster where you can browse concerts, sports games, and shows.
 
-## 🎯 Key Features
+## What It Does
 
-### User Experience
-- **Smart Search**: Real-time search across events, venues, and artists
-- **Advanced Filtering**: 
-  - Category-based filtering (Concerts, Sports, Theatre, Comedy)
-  - Dynamic price range slider
-  - Sort by date, price, or name
-- **Favorites System**: Persistent favorites using localStorage
-- **Responsive Design**: Mobile-first approach with smooth animations
-- **Accessibility**: Full keyboard navigation, ARIA labels, semantic HTML
+Search for events, filter by category (concerts, sports, theatre, comedy), adjust price range, and save your favorites. Everything updates in real-time as you interact with the filters.
 
-### Technical Highlights
-- **100% TypeScript**: Complete type safety across the codebase
-- **Comprehensive Testing**: Unit and integration tests with Vitest + React Testing Library
-- **GraphQL Integration**: Apollo Client with mock data via MSW
-- **CI/CD Pipeline**: Automated testing and deployment via GitHub Actions
-- **Modern Build**: Vite for lightning-fast HMR and optimized production builds
+Right now it uses mock data (no real backend), but the architecture is set up so I could swap in a real API without changing much code.
 
-## 🏗️ Architecture
+## Tech Stack
 
-### Component Structure
-```
-src/
-├── pages/
-│   ├── Home.tsx              # Main event listing page
-│   └── Home.test.tsx         # Comprehensive component tests
-├── hooks/
-│   └── useFavorites.ts       # Custom hook for localStorage management
-├── apollo/
-│   └── client.ts             # Apollo Client configuration
-├── mocks/
-│   ├── browser.ts            # MSW browser worker setup  
-│   └── handlers.ts           # GraphQL mock handlers
-├── test/
-│   └── setup.ts              # Test environment configuration
-├── App.tsx                   # Root component with routing
-└── main.tsx                  # Application entry point
-```
-
-### Data Flow
-1. **GraphQL Query** → Apollo Client requests events
-2. **MSW Intercept** → Mock Service Worker returns mock data in dev
-3. **State Management** → React hooks manage UI state
-4. **localStorage** → Persists user favorites across sessions
-5. **Filtering/Sorting** → Client-side data transformation
-
-## 🚀 Tech Stack
-
-**Core:**
-- React 18.2 (with hooks, StrictMode)
-- TypeScript 5.9 (strict mode)
-- Vite 5.1 (build tool)
-
-**Data Layer:**
-- Apollo Client 3.8 (GraphQL)
-- Mock Service Worker 1.2 (API mocking)
+**Frontend:**
+- React 18 with TypeScript (strict mode enabled)
+- Apollo Client for GraphQL
+- React Router for navigation
+- Vite for dev server and builds
 
 **Testing:**
-- Vitest 4.0 (test runner)
-- React Testing Library (component testing)
-- @testing-library/user-event (interaction testing)
+- Vitest + React Testing Library
+- 11 tests covering the main flows
+- Mock Service Worker to simulate API calls
 
-**CI/CD:**
-- GitHub Actions (automated testing, TypeScript checking, deployment)
-- Codecov integration (code coverage reporting)
+**Deployment:**
+- GitHub Actions runs tests on every push
+- Auto-deploys to GitHub Pages if tests pass
 
-**Routing & State:**
-- React Router DOM 6.14
-- Custom hooks for state management
-
-## 📦 Getting Started
-
-### Prerequisites
-- Node.js 18+ 
-- npm 9+
-
-### Installation
+## Quick Start
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
-Visit `http://localhost:5173` to view the app.
+Visit `http://localhost:5173` and you should see 6 mock events (Taylor Swift, Raptors game, Hamilton, etc.)
 
-## 🧪 Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test
-
-# Run tests with UI
-npm run test:ui
-
-# Generate coverage report
-npm run test:coverage
-```
-
-**Test Coverage:**
-- Component rendering and state management
-- User interactions (search, filter, sort, favorites)
-- GraphQL query handling
-- Error boundary behavior
-- Accessibility features
-
-## 🏗️ Development
-
-### Available Scripts
+## Running Tests
 
 ```bash
-npm run dev           # Start dev server (port 5173)
-npm run build         # Production build
-npm run preview       # Preview production build
-npm test              # Run tests
-npm run test:ui       # Launch Vitest UI
-npm run test:coverage # Generate coverage report
+npm test              # Run all tests
+npm run test:ui       # Open test UI (pretty cool visualization)
+npm run test:coverage # See what's covered
 ```
 
-### Key Files
+## Project Structure
 
-- `vitest.config.ts` - Test configuration with coverage settings
-- `tsconfig.json` - TypeScript compiler options (strict mode)
-- `.github/workflows/ci.yml` - CI/CD pipeline configuration
+```
+src/
+├── pages/Home.tsx           # Main page with all the event cards
+├── hooks/useFavorites.ts    # Manages favorites in localStorage  
+├── apollo/client.ts         # GraphQL setup
+├── mocks/handlers.ts        # Mock API responses (6 fake events)
+└── test/setup.ts            # Test configuration
+```
 
-## 🎨 Architecture Decisions
+## How It Works
 
-### Why GraphQL + Apollo Client?
-- **Precise data fetching**: Only request the fields you need
-- **Type safety**: Strong typing with TypeScript integration
-- **Caching**: Built-in normalized cache reduces network requests
-- **Developer experience**: Excellent devtools and error handling
+The app makes a GraphQL query for events, which gets intercepted by Mock Service Worker (MSW) and returns fake data. Apollo Client caches the response so it doesn't re-fetch on every render.
 
-### Why Mock Service Worker?
-- **Network-level mocking**: Intercepts actual HTTP requests
-- **Environment agnostic**: Same code works with mocks or real API
-- **Testing friendly**: Reuse handlers in tests without duplication
-- **Production-like**: Simulates real network behavior (latency, errors)
+Favorites are stored in your browser's localStorage, so they stick around when you refresh the page.
 
-### Why Vite?
-- **Speed**: Near-instant HMR and cold start (~100-300ms)
-- **Native ESM**: Leverages browser-native module loading
-- **Optimized builds**: Rollup-based production bundler
-- **Modern defaults**: First-class TypeScript and JSX support
+All the filtering (search, category, price, sort) happens client-side. In a real app with thousands of events, you'd do this on the server, but for a demo with 6 events it's overkill.
 
-### Why localStorage for Favorites?
-- **Simplicity**: No backend auth required for demo
-- **Persistence**: Survives page refreshes
-- **Privacy**: Data stays on user's device
-- **Performance**: Instant read/write operations
+## Why I Built It This Way
 
-### Why Vitest over Jest?
-- **Vite integration**: Reuses Vite config and transforms
-- **Speed**: 10x faster than Jest for our test suite
-- **ESM native**: No configuration for ESM modules
-- **Compatible**: Same API as Jest, easy migration
+**GraphQL + Apollo Client**: I wanted to learn GraphQL, and Apollo makes it really easy. The automatic caching is nice - you don't have to think about it.
 
-## 📊 Performance Considerations
+**Mock Service Worker**: I didn't want to spin up a real backend, but I also didn't want to just fake the API calls with `fetch` mocks. MSW intercepts actual network requests, so the code is closer to production.
 
-- **Code splitting**: Routes loaded on-demand (ready for expansion)
-- **Memoization**: Expensive computations cached (filtering/sorting)
-- **Virtual scrolling ready**: Architecture supports pagination
-- **Optimized re-renders**: Proper React key usage and memo patterns
+**TypeScript**: Honestly, after using it for a while, I can't go back. The autocomplete and compile-time error catching save so much debugging time.
 
-## 🔒 Accessibility
+**Vitest over Jest**: It's just faster and works better with Vite. The test UI is also really nice for seeing what's failing.
 
-- **Keyboard navigation**: All interactive elements accessible via keyboard
-- **ARIA labels**: Proper labeling for screen readers
-- **Semantic HTML**: Correct use of article, nav, section elements
-- **Focus management**: Visual focus indicators on all controls
-- **Color contrast**: WCAG AA compliant color choices
+**localStorage for Favorites**: Easiest way to persist data without a backend. In a real app you'd store this server-side with user accounts, but for a demo this works fine.
 
-## 🚀 CI/CD Pipeline
+## Things I Learned
 
-### Automated Checks
-1. **Testing**: Vitest runs all unit/integration tests
-2. **Type Checking**: TypeScript compiler validates types
-3. **Build Verification**: Ensures production build succeeds
-4. **Multi-version**: Tests on Node 18.x and 20.x
+- Setting up GraphQL queries with Apollo (the `useQuery` hook is great)
+- Using Mock Service Worker to simulate APIs
+- Writing tests with React Testing Library (testing user interactions vs implementation details)
+- TypeScript strict mode (it forces you to handle null/undefined everywhere)
+- GitHub Actions for CI/CD (auto-runs tests on every push)
 
-### Deployment
-- **Trigger**: Automatic on push to main branch
-- **Target**: GitHub Pages
-- **Process**: Build → Test → Deploy
-- **Rollback**: Easy revert via Git tags
+## Known Limitations
 
-## 🎯 Project Highlights for Interviews
+- No real backend (all data is hardcoded in `mocks/handlers.ts`)
+- Only 6 events (enough to demo the features)
+- No user authentication (favorites are device-specific)
+- Filtering happens client-side (fine for 6 events, wouldn't scale to thousands)
 
-### Software Engineering Best Practices
-✅ **Type Safety**: Full TypeScript with strict mode  
-✅ **Testing**: Comprehensive test coverage with RTL  
-✅ **CI/CD**: Automated testing and deployment  
-✅ **Code Quality**: Clean, readable, well-documented code  
-✅ **Git Workflow**: Meaningful commits, proper branching  
+## What I'd Add Next
 
-### Domain Relevance (Ticketmaster)
-✅ **Event Discovery**: Core ticket/event platform features  
-✅ **Search & Filter**: Essential for large event catalogs  
-✅ **Favorites**: User personalization and engagement  
-✅ **Responsive UI**: Mobile-optimized experience  
-✅ **Scalable Architecture**: Ready for backend integration  
+If I kept working on this:
+- Connect to a real backend (maybe Supabase or Firebase)
+- Add event detail pages
+- User authentication
+- Server-side filtering and pagination
+- Date range filtering
+- Map view showing event locations
 
-### Technical Skills
-✅ React expertise (hooks, context, composition)  
-✅ TypeScript proficiency (interfaces, generics, type guards)  
-✅ GraphQL knowledge (queries, caching, optimization)  
-✅ Testing skills (unit, integration, user interaction)  
-✅ Modern tooling (Vite, Vitest, MSW, GitHub Actions)  
+## License
 
-## 📈 Future Enhancements
-
-See [IMPROVEMENT_PLAN.md](./IMPROVEMENT_PLAN.md) for the complete roadmap.
-
-**Next Priority:**
-- Real GraphQL backend integration
-- User authentication (OAuth)
-- Event detail pages with seat selection
-- Purchase flow integration
-- Advanced filtering (date range, location radius)
-- Social sharing features
-- Performance monitoring (Web Vitals)
-
-## 📄 License
-
-MIT License - feel free to use this project for learning or as a portfolio piece.
-
-## 🤝 Contributing
-
-This is a personal portfolio project, but suggestions and feedback are welcome via issues or pull requests.
+MIT - feel free to use this for learning or your own projects.
 
 ---
 
-**Built by Ruidong Yang** | [GitHub](https://github.com/direktoronto)
+Built by [Ruidong Yang](https://github.com/direktoronto)
